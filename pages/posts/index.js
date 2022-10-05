@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link.js";
 import { getAllPosts } from "../../services/postService";
+import styled from "styled-components";
 
 /*
  * Make all necessary imports.
@@ -24,15 +25,46 @@ export default function Posts({ posts }) {
       </Head>
       <h1>All Posts</h1>
       <p>List of all posts</p>
-      <ul>
+      <UL>
         {posts.map((post) => {
           return (
-            <li key={post.id}>
-              <Link href={`/posts/${post.id}`}>{post.name}</Link>
-            </li>
+            <ListElement key={post.id}>
+              <Link href={`/posts/${post.id}`} passHref>
+                <Anchor>
+                  <PostContainer>{post.name}</PostContainer>
+                </Anchor>
+              </Link>
+            </ListElement>
           );
         })}
-      </ul>
+      </UL>
     </>
   );
 }
+
+const Anchor = styled.a`
+  color: limegreen;
+  text-decoration: none;
+  display: flex;
+  &:hover {
+    color: white;
+  }
+`;
+
+const PostContainer = styled.div`
+  background-color: blue;
+  padding: 1.5rem;
+  border-radius: 10px;
+`;
+
+const ListElement = styled.li`
+  list-style: none;
+  margin: 0 2rem 0 0;
+`;
+
+const UL = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+`;
